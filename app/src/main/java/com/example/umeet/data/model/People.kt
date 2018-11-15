@@ -9,6 +9,6 @@ data class People(
     var metAt: String = "",
     var contact: String = "",
     var eMail: String = "",
-    var mobile: String = "",
+    var facebook: String = "",
     @PrimaryKey(autoGenerate = true) var id: Int = 0
 )

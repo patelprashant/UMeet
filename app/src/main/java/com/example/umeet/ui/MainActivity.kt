@@ -1,7 +1,8 @@
-package com.example.umeet
+package com.example.umeet.ui
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
+import com.example.umeet.R
 
 class MainActivity : AppCompatActivity() {
 

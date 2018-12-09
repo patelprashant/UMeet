@@ -5,17 +5,19 @@ import androidx.lifecycle.LiveData
 import com.example.umeet.data.db.PeopleDao
 import com.example.umeet.data.db.PeopleDatabase
 import com.example.umeet.data.model.People
+import com.example.umeet.data.net.PeopleInfoProvider
 
 class PeopleRepository(application: Application) {
     private val peopleDao: PeopleDao
 
     init {
-        val peoplDatabase = PeopleDatabase.getInstancce(application)
-        peopleDao = peoplDatabase.peopleDao()
+        val peopleDatabase = PeopleDatabase.getInstancce(application)
+        peopleDao = peopleDatabase.peopleDao()
     }
 
-    fun getAllPeople(): LiveData<List<People>> {
-        return peopleDao.getAll()
+    fun getAllPeople(): MutableList<People> {
+        return PeopleInfoProvider.peopleList
+//        return peopleDao.getAll()
     }
 
     fun insertPeople(people: People) {

@@ -5,5 +5,9 @@
     android:layout_height="match_parent"
     tools:context=".ui.MainActivity">
 
-
+    <fragment
+        android:id="@+id/peoplesListFragment"
+        android:name="com.example.umeet.ui.list.PeopleListFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

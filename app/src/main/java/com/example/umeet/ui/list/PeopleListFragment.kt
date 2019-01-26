@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.umeet.R
 import com.example.umeet.UMetApp
@@ -23,18 +24,11 @@ import kotlinx.android.synthetic.main.fragment_people_list.*
  */
 class PeopleListFragment : Fragment(),
     PeopleListAdapter.OnItemClickListener {
+    private lateinit var viewModel: PeoplesListViewModel
+
     override fun onCreate(savedInstanceState: Bundle?) {
+        viewModel = ViewModelProviders.of(this).get(PeoplesListViewModel::class.java)
         super.onCreate(savedInstanceState)
-    }
-
-    override fun onResume() {
-        super.onResume()
-
-        //Observe people list
-        val peopleRepository = (activity?.application as UMetApp).getPeopleRepository()
-        peopleRepository.getAllPeople().observe(this, Observer { peopleList ->
-            populatePeopleList(peopleList as MutableList<People>)
-        })
     }
 
     private fun populatePeopleList(peopleList: MutableList<People>) {
@@ -48,6 +42,12 @@ class PeopleListFragment : Fragment(),
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        // Start observing people list
+        viewModel.getPeopleList().observe(this, Observer<List<People>> { peoples ->
+            peoples?.let {
+                populatePeopleList(peoples as MutableList<People>)
+            }
+        })
     }
 
     private fun getAllPeople(peopleList: MutableList<People>) {

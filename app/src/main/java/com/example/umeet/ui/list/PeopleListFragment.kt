@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.umeet.R
 import com.example.umeet.UMetApp
@@ -28,8 +29,17 @@ class PeopleListFragment : Fragment(),
 
     override fun onResume() {
         super.onResume()
-        val peopleList = (activity!!.application as UMetApp).getPeopleRepository().getAllPeople()
-        getAllPeople(peopleList)
+
+        //Observe people list
+        val peopleRepository = (activity?.application as UMetApp).getPeopleRepository()
+        peopleRepository.getAllPeople().observe(this, Observer { peopleList ->
+            populatePeopleList(peopleList as MutableList<People>)
+        })
+    }
+
+    private fun populatePeopleList(peopleList: MutableList<People>) {
+        peopleRecyclerView.adapter = PeopleListAdapter(peopleList, this)
+        peopleRecyclerView.layoutManager = LinearLayoutManager(context)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
